@@ -6,44 +6,14 @@ const Datastore = require('nedb');
 const token = 'NjUwNjYwNjE1NjQzNDYzNjg4.XeOk_w.wotnEHIxpK05H-Uj5wUBHhzEu8I';
 
 const PREFIX = 'HIMR';
-var initCount;
-
+var delDanMessBoo;
+var time2;
 
 // loads the himr database file 
 const himrDatabase = new Datastore('himrDatabaseFile.db');
 himrDatabase.loadDatabase(); 
 
 
-// counter function
-
-function messageCountFunc(booCountArg) {
-    let countCurNum = 0;
-    if (booCountArg) {
-        countCurNum = 0;
-    }
-    return countCurNum +=1;
-
-}
-
-
-// starts the timed count down to delete Daniels message
-
-function startCountdownDel(argInitCount){
-    himrDatabase.find({ sessionCount: argInitCount }, function (err, docs) {
-        // docs is an array containing documents Mars, Earth, Jupiter
-        // If no document is found, docs is equal to []
-
-                            (function (individComment, setTimeComDelFunc){
-                        setTimeout(function() {
-
-                            individComment.delete();
-
-                        }, setTimeComDelFunc);
-                        
-                    })(msg3, ms(time2));
-
-      });
-}
 
 
 
@@ -132,7 +102,7 @@ himrBot.on('message', message => {
             if (message.member.roles.find(r => r.name === "The Daniel")) {
 
                 // turns your command into an amount of time
-            let time2;
+            
             time2 = undefined;
             time2 = args[1];
 
@@ -156,17 +126,16 @@ himrBot.on('message', message => {
         
 
 
-            let msgCollection = message.channel.awaitMessages(msg3 => {
+            let danielMsgCollection = message.channel.awaitMessages(msg3 => {
 
 
 
 
                 if (msg3.member.roles.find(r => r.name === "The Daniel")) {
                     // console logs eash message caught by the await function 
-                    initCount = messageCountFunc(); // Counter starts at 1
-                    startCountdownDel(initCount);
+                    delDanMessBoo = true;
 
-                    himrDatabase.insert({sessionCount: initCount, messageObject: msg3});
+                    // himrDatabase.insert({sessionCount: initCount, messageObject: msg3});
                     
                     // (function (individComment, setTimeComDelFunc){
                     //     setTimeout(function() {
@@ -203,6 +172,8 @@ himrBot.on('message', message => {
         break;
         case 'off':
                 if(message.member.roles.find(r => r.name === "The Daniel")) {
+
+                delDanMessBoo = false;
                 function resetBot(channel) {
                     let embedReset = new RichEmbed()
                     .setTitle("Notification for Daniel 😃")
@@ -223,6 +194,42 @@ himrBot.on('message', message => {
 
 })
 
+
+// deletes messages 
+himrBot.on('message', message => {
+    // statment that looks if delDanMessBoo is true 
+    if (delDanMessBoo) {
+
+        message.channel.fetchMessages({limit: 1}).then(messages => { //collected is a Collection
+
+
+        messages.forEach(msg1 => {
+              if (msg1.member.roles.find(r => r.name === "The Daniel")) {
+
+                (function (individComment, setTimeComDelFunc){
+                        setTimeout(function() {
+
+                            individComment.delete();
+
+                        }, setTimeComDelFunc);
+                        
+                    })(msg1, ms(time2));
+              }
+
+            });
+
+            delDanMessBoo = false;
+
+
+    }).catch(err => {
+        console.log('Error while doing Bulk Delete');
+        console.log(err);
+    });
+
+    }
+
+   
+})
 
 
 
