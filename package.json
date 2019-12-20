@@ -1,0 +1,16 @@
+{
+  "name": "himr-discord-bot",
+  "version": "1.0.0",
+  "description": "timed bot that deletes daniels comments",
+  "main": "himrTimedBot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jerkules",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "ms": "^2.1.2",
+    "nedb": "^1.8.0"
+  }
+}
