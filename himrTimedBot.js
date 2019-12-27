@@ -2,20 +2,17 @@ const {Client, RichEmbed} = require('discord.js');
 const himrBot = new Client();
 const ms = require('ms');
 const Datastore = require('nedb');
+const fs = require('fs');
 
-const token = 'NjUwNjYwNjE1NjQzNDYzNjg4.XeOk_w.wotnEHIxpK05H-Uj5wUBHhzEu8I';
+const token = 'NjUwNjYwNjE1NjQzNDYzNjg4.XgC7lA.1hcorwEy99ru04ma-J0OdxKrSCI';
 
 const PREFIX = 'HIMR';
 var delDanMessBoo;
 var time2;
-
-// loads the himr database file 
-const himrDatabase = new Datastore('himrDatabaseFile.db');
-himrDatabase.loadDatabase(); 
-
-
-
-
+var timeMods;
+var danInit;
+var modInit;
+var adminInit;
 
 //just lets you know via the console that the bot is ready
 himrBot.on('ready', () =>{
@@ -23,7 +20,24 @@ himrBot.on('ready', () =>{
 })
 
 
-// takes in the message 
+
+
+
+// // Boss
+// // Pia
+// // Sid
+// // Ilint
+// // Para
+// // Yoko
+// // Missa
+// // Jerkules
+
+
+
+
+
+
+// takes in the message for Daniel
 himrBot.on('message', message => {
 
     let args = message.content.substring(PREFIX.length).split(" ");
@@ -121,9 +135,10 @@ himrBot.on('message', message => {
 
             message.author.send(embedDanActiveMesDel);
 
-            // Start of active messages deleting code 
 
-        
+            danInit = true;
+           
+            // Start of active messages deleting code 
 
 
             let danielMsgCollection = message.channel.awaitMessages(msg3 => {
@@ -135,17 +150,6 @@ himrBot.on('message', message => {
                     // console logs eash message caught by the await function 
                     delDanMessBoo = true;
 
-                    // himrDatabase.insert({sessionCount: initCount, messageObject: msg3});
-                    
-                    // (function (individComment, setTimeComDelFunc){
-                    //     setTimeout(function() {
-                    //         console.log("here is before: " + individComment);
-                    //         individComment.delete();
-                    //         console.log("here is after: " + individComment);
-                    //     }, setTimeComDelFunc);
-                        
-                    // })(msg3, ms(time2));
-    
 
     
                 }
@@ -195,13 +199,14 @@ himrBot.on('message', message => {
 })
 
 
-// deletes messages 
+// deletes messages for Daniel 
 himrBot.on('message', message => {
     // statment that looks if delDanMessBoo is true 
-    if (delDanMessBoo) {
 
+    if (typeof message.content === "string" && !message.content.includes("HIMRdel") && danInit) {
+        
         message.channel.fetchMessages({limit: 1}).then(messages => { //collected is a Collection
-
+ 
 
         messages.forEach(msg1 => {
               if (msg1.member.roles.find(r => r.name === "The Daniel")) {
@@ -222,14 +227,44 @@ himrBot.on('message', message => {
 
 
     }).catch(err => {
-        console.log('Error while doing Bulk Delete');
+        console.log('Error while Deleting');
         console.log(err);
     });
+
+    } else if (message.content.includes("HIMRdel") && message.member.hasPermission(['KICK_MEMBERS', 'BAN_MEMBERS']) && danInit) {
+        message.channel.fetchMessages({limit: 1}).then(messages => { //collected is a Collection
+
+
+            messages.forEach(msg2 => {
+
+    
+                    (function (individComment, setTimeComDelFunc){
+                            setTimeout(function() {
+    
+                                individComment.delete();
+    
+                            }, setTimeComDelFunc);
+                            
+                        })(msg2, ms(time2));
+                  
+    
+                });
+    
+                delDanMessBoo = false;
+    
+    
+        }).catch(err => {
+            console.log('Error while Deleting');
+            console.log(err);
+        });
 
     }
 
    
 })
+
+
+
 
 
 
