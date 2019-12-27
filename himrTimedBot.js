@@ -4,7 +4,7 @@ const ms = require('ms');
 const Datastore = require('nedb');
 const fs = require('fs');
 
-const token = 'NjUwNjYwNjE1NjQzNDYzNjg4.XgXdKg.fAdmdmrFSurUXcK93JX2ZEarQqY';
+const token = 'NjUwNjYwNjE1NjQzNDYzNjg4.XgXfew.5Z_ooNJbkFBCijXU1G3glaT97Zo';
 
 const PREFIX = 'HIMR';
 var delDanMessBoo;
