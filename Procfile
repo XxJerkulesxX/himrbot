@@ -1,1 +1,1 @@
-worker: node himrTimedBot.js
+worker: node bot.js
