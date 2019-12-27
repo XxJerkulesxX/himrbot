@@ -4,7 +4,7 @@ const ms = require('ms');
 const Datastore = require('nedb');
 const fs = require('fs');
 
-const token = 'NjUwNjYwNjE1NjQzNDYzNjg4.XgXfew.5Z_ooNJbkFBCijXU1G3glaT97Zo';
+// const token = 'NjUwNjYwNjE1NjQzNDYzNjg4.XgXfew.5Z_ooNJbkFBCijXU1G3glaT97Zo';
 
 const PREFIX = 'HIMR';
 var delDanMessBoo;
@@ -269,4 +269,4 @@ himrBot.on('message', message => {
 
 
 
-himrBot.login(token);
+himrBot.login("NjUwNjYwNjE1NjQzNDYzNjg4.XgXfew.5Z_ooNJbkFBCijXU1G3glaT97Zo");
